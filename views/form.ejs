@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= locals.title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <%- include("./partials/header") %>
+    <main class="app-main">
+
+
+      <div class="form-container">
+        <h1>Add New Message: </h1>
+
+        <!-- Create forms, set the 'name' attribute as we'll access their values
+        in the POST request handler later with those name attributes -->
+        <form class="add-message-form" action="/new" method="POST">
+          <div class="input-group">
+            <label for="username">Username:
+              <input type="text" id="username" name="username" placeholder="Username" value="<%= locals.message ? local.message.username : "" %>" required>
+            </label>
+          </div>
+          <div class="input-group">
+            <label for="message">Message:
+              <input type="text" id="message" name="message" placeholder="Message" value="<%= locals.message ? locals.message.text : "" %>" required>
+            </label>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+
+
+      <% if (locals.errors && locals.errors.length > 0) { %>
+        <div class="error-messages">
+          <ul>
+            <% locals.errors.forEach(error => { %>
+              <li><%= error.msg %></li>
+            <% }); %>
+          </ul>
+        </div>
+      <% } %>
+      </div>
+      
+    </main>
+    <%- include("./partials/footer") %>
+  </div>  
+</body>
+</html>

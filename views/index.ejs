@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title><%= locals.title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+	</head>
+	<body>
+    <div class="app-container">
+      <%- include("./partials/header") %>
+		<main class="app-main">
+			
+      <div class="chat-box">
+        <header class="chat-box-header">
+          <h1>Chat Window</h1>
+        </header>
+        <div class="message-grid">
+        <% if (locals.messages.length > 0 ) { %> 
+          <% locals.messages.forEach((message) => { %>
+            <div class="message-container">
+              <header>
+                <h3><%= message.username %></h3>
+                <p><%= message.formatted_date_added %></p>
+              </header>
+              <div class="message-content">
+                <p><%= message.text %></p>
+              </div>
+            </div>
+        <% }) %> 
+        <% } else { %>
+          <div>
+            <p>No Messages Available!</p>
+          </div>
+        <% } %>
+        </div>
+      </div>
+    </main>
+  <%- include("./partials/footer") %>
+  </div>
+</body>
+</html>
