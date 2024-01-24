@@ -3,9 +3,10 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const compression = require("compression");
+const helmet = require("helmet");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 
 const app = express();
 
@@ -16,6 +17,30 @@ try {
 } catch (e) {
 	console.log(e);
 }
+
+// Set up rate limiter: maximum of 10 requests every 10 seconds
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+	windowMs: 1 * 10 * 1000, // 10 seconds
+	max: 10,
+});
+// Apply rate limiter to all requests
+app.use(limiter);
+
+// Compress all routes
+app.use(compression());
+
+/*
++ set up helmet in middleware chain: Set CSP headers to allow thigns suc has bootstrap or jquery 
+  to have served if you use those.
+*/
+app.use(
+	helmet.contentSecurityPolicy({
+		directives: {
+			"script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+		},
+	})
+);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -29,7 +54,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

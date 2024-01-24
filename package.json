@@ -1,19 +1,25 @@
 {
 	"name": "mini-message-board",
 	"version": "0.0.0",
+	"engines": {
+		"node": ">=20.9.0"
+	},
 	"private": true,
 	"scripts": {
-    "testDb": "node --env-file=.env ./db",
+		"testDb": "node --env-file=.env ./db",
 		"devstart": "nodemon --env-file=.env ./bin/www",
 		"serverstart": "SET DEBUG=mini-message-board:* & npm run devstart"
 	},
 	"dependencies": {
+		"compression": "^1.7.4",
 		"cookie-parser": "^1.4.6",
 		"debug": "^4.3.4",
 		"ejs": "^3.1.9",
 		"express": "^4.18.2",
 		"express-async-handler": "^1.2.0",
+		"express-rate-limit": "^7.1.5",
 		"express-validator": "^7.0.1",
+		"helmet": "^7.1.0",
 		"http-errors": "^2.0.0",
 		"luxon": "^3.4.4",
 		"mongodb": "^6.3.0",
