@@ -6,7 +6,7 @@
 	},
 	"private": true,
 	"scripts": {
-		"testDb": "node --env-file=.env ./db",
+		"start": "node ./bin/www",
 		"devstart": "nodemon --env-file=.env ./bin/www",
 		"serverstart": "SET DEBUG=mini-message-board:* & npm run devstart"
 	},
